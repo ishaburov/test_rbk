@@ -2,29 +2,25 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\ApiServices\Rbc;
 use App\Http\Controllers\Controller;
+use App\Models\Article;
+use Illuminate\Support\Facades\Artisan;
 
 class ArticleController extends Controller
 {
-    /*** @var Rbc */
-    protected $rbcApi;
 
-    public function __construct()
-    {
-        $this->rbcApi = app(Rbc::class);
-    }
 
-    public function index()
+    public function index(Article $model)
     {
-        $articles = $this->rbcApi
-            ->getArticles();
+        $articles = $model->getLatestArticles();
 
         return $this->getJson($articles);
     }
 
-    public function show()
+    public function show($articleId, Article $model)
     {
+        $article = $model->getArticle($articleId);
 
+        return $this->getJson($article);
     }
 }

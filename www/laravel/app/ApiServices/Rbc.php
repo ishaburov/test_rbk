@@ -2,6 +2,7 @@
 
 namespace App\ApiServices;
 
+use App\Consts\ExternalTypes;
 use Illuminate\Support\Collection;
 use PHPHtmlParser\Dom;
 
@@ -23,10 +24,10 @@ class Rbc extends Parser
         $this->link = $link;
     }
 
-    public function getArticles($link = null, $limit = 15)
+    public function getArticles($link = null, $limit = 15) // 10 минимум
     {
         $limit = $limit ?: $this->limit;
-        $link = $link ?: "https://www.rbc.ru/v10/ajax/get-news-feed/project/rbcnews.tyumen/limit/{$limit}?_=1575474229531";
+        $link = $link ?: "https://www.rbc.ru/v10/ajax/get-news-feed/project/rbcnews.tyumen/limit/{$limit}";
 
         $this->setLink($link);
         $content = $this->getContents();
@@ -104,10 +105,10 @@ class Rbc extends Parser
             $articleSlideLoad = $dom->load($articleSlide['html']);
 
             $articlesArray[$key]['external_id'] = $articleId;
+            $articlesArray[$key]['external_type_id'] = ExternalTypes::RBC;
             $articlesArray[$key]['published_at'] = $article['publish_date_t'];
             $articlesArray[$key]['title'] = $title;
             $articlesArray[$key]['link'] = $link;
-            $articlesArray[$key]['type'] = $type;
             $articlesArray[$key]['description'] = $this->getArticleDescription($articleSlideLoad);
             $articlesArray[$key]['image'] = $this->getArticleImage($articleSlideLoad);
         }

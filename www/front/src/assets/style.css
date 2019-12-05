@@ -1,0 +1,14 @@
+.form__title:first-letter{
+  text-transform: uppercase;
+}
+.form__text{
+  transition: 0.4s;
+  font-size: 14px;
+}
+.form__text:first-letter{
+  text-transform: uppercase;
+}
+.form__text:hover{
+  color: #37bc9b;
+  cursor: pointer;
+}

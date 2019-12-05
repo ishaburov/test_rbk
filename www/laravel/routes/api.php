@@ -13,6 +13,7 @@
 
 Route::group(['namespace' => 'Api', 'prefix' => 'v1'], function () {
     Route::group(['prefix' => 'rbc'], function () {
-        Route::get('/news', 'ArticleController@index');
+        Route::get('/articles', 'ArticleController@index');
+        Route::get('/articles/{id}', 'ArticleController@show');
     });
 });
