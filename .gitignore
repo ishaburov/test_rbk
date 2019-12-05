@@ -1,4 +1,4 @@
 mysql
-nginx/conf.d
+nginx/conf.d/default.conf
 docker-compose.yml
 .idea
