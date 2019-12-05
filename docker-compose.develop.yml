@@ -2,7 +2,7 @@ version: '3'
 
 services:
   nginx:
-    container_name: employment_nginx
+    container_name: test_nginx
     image: nginx:1.17.4-alpine
     restart: always
     ports:
@@ -12,9 +12,10 @@ services:
       - ./www/laravel:/var/www/app:cached
     depends_on:
       - php-fpm
+      - node_front
 
   db:
-    container_name: employment_db
+    container_name: test_db
     image: mysql:5.7
     restart: always
     ports:
@@ -28,7 +29,7 @@ services:
       - ./mysql:/var/lib/mysql:cached
 
   php-fpm:
-    container_name: employment_php-fpm
+    container_name: test_php-fpm
     image: ishaburov/laravel_php-fpm7.4
     restart: always
     volumes:
@@ -36,3 +37,23 @@ services:
     working_dir: /var/www/app
     depends_on:
       - db
+
+  laravel_cron:
+    container_name: test_laravel_cron
+    build:
+      context: ./
+      dockerfile: laravel_cron.dockerfile
+    restart: always
+    working_dir: /var/www/app
+    volumes:
+      - ./www/laravel/:/var/www/app:cached
+    depends_on:
+      - db
+
+  node_front:
+    container_name: test_node
+    image: node:10
+    volumes:
+      - ./www/front/:/var/www/front/:cached
+    working_dir: /var/www/front/
+    command: yarn run start
