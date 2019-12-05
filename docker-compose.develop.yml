@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+  nginx:
+    container_name: employment_nginx
+    image: nginx:1.17.4-alpine
+    restart: always
+    ports:
+      - 89:80
+    volumes:
+      - ./nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf:cached
+      - ./www/laravel:/var/www/app:cached
+    depends_on:
+      - php-fpm
+
+  db:
+    container_name: employment_db
+    image: mysql:5.7
+    restart: always
+    ports:
+      - 3308:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=pass
+      - MYSQL_DATABASE=testwork
+      - MYSQL_USER=test
+      - MYSQL_PASSWORD=pass
+    volumes:
+      - ./mysql:/var/lib/mysql:cached
+
+  php-fpm:
+    container_name: employment_php-fpm
+    image: ishaburov/laravel_php-fpm7.4
+    restart: always
+    volumes:
+      - ./www/laravel/:/var/www/app:cached
+    working_dir: /var/www/app
+    depends_on:
+      - db
