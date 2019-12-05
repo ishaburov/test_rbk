@@ -1,12 +1,12 @@
 <template>
-    <div>
+    <v-container>
         <ArticleCard
                 class="mb-2"
                 :item="item"
                 :description="item.description"
                 :show-view="false"
         />
-    </div>
+    </v-container>
 </template>
 
 <script>

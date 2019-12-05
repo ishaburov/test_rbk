@@ -7,7 +7,7 @@
         >
             <img :src="item.image">
         </div>
-        <div class="body-1 mb-2"> {{ description }}</div>
+        <div class="body-1 mb-2" v-html="description"></div>
         <v-btn v-if="showView"
                block
                :to="`/articles/${item.id}`"

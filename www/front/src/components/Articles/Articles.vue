@@ -1,20 +1,22 @@
 <template>
-    <v-layout
-            wrap
-            class="articles"
-            justify-center
-    >
-        <v-flex v-for="item of items"
-                :key="item.id"
-                xs3
-                class="articles__card">
-            <ArticleCard
-                    class="mb-2"
-                    :item="item"
-                    :description="item.short_description"
-            />
-        </v-flex>
-    </v-layout>
+    <v-container>
+        <v-layout
+                wrap
+                class="articles"
+                justify-center
+        >
+            <v-flex v-for="item of items"
+                    :key="item.id"
+                    xs3
+                    class="articles__card">
+                <ArticleCard
+                        class="mb-2"
+                        :item="item"
+                        :description="item.short_description"
+                />
+            </v-flex>
+        </v-layout>
+    </v-container>
 </template>
 
 <script>
